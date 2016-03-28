@@ -1,64 +1,71 @@
-var gulp = require('gulp'),
+var isDev = true,
+    // isLivereload = false,
+    isLivereload = true,
+    gulp = require('gulp'),
     connect = require('gulp-connect'),
     watch = require('gulp-watch'),
-    less = require('gulp-less'),
-    hasLivereload = false
-
+    less = require('gulp-less')
 
 gulp.task('http-server', function() {
     connect.server({
-        livereload: hasLivereload,
-        root: ['src']
+        livereload: isLivereload,
+        // dev-build 为了让server 访问到css
+        root: ['src', 'dev-build']
     })
 })
 
-gulp.task('less', function() {
-    var LessPluginCleanCSS = require('less-plugin-clean-css'),
-        LessPluginAutoPrefix = require('less-plugin-autoprefix'),
-        cleancss = new LessPluginCleanCSS({ advanced: true }),
-        autoprefix = new LessPluginAutoPrefix({ browsers: ["last 2 versions"] })
+! function lessTask() {
+    var LessPluginAutoPrefix = require('less-plugin-autoprefix'),
+        autoprefix = new LessPluginAutoPrefix({ browsers: ["android > 2", 'iOS > 5'] }),
 
-    gulp.src("src/style/**/*.less")
-        .pipe(less({
-            plugins: [autoprefix, cleancss]
-        }))
-        .pipe(gulp.dest('src/style'))
-})
+        plugins = [autoprefix]
+    gulp.task('less', function() {
+        gulp.src("src/style/**/*.less")
+            .pipe(less({
+                plugins: plugins
+            }))
+            .pipe(gulp.dest('dev-build/style')) // 把css输出到less的原目录下，文件太多，很烦，还是弄到别的目录
+    })
+
+    gulp.task('less-dist', function() {
+        var LessPluginCleanCSS = require('less-plugin-clean-css'),
+            cleancss = new LessPluginCleanCSS({ advanced: true })
+
+        plugins.push(cleancss)
+
+        gulp.src("src/style/**/*.less")
+            .pipe(less({
+                plugins: plugins
+            }))
+            .pipe(gulp.dest('dist/style'))
+    })
+}()
+
 
 gulp.task('watch', function(cb) {
-    watch('src/style/**/*.less', function() {
-        gulp.src('src/style/**/*.less')
-            .pipe(watch('src/style/**/*.less'))
-            .pipe(less())
-            .pipe(connect.reload())
-            .on('end', cb)
-    })
-
-    watch('src/script/**/*.js', function() {
-        gulp.src('src/script/**/*.js')
-            .pipe(watch('src/script/**/*.js'))
-            .pipe(connect.reload())
-            .on('end', cb)
-    })
-
-    // 这应该是旧版watch的写法
-    // gulp.watch("src/style/**/*.less", ['less'])
+    gulp.watch("src/style/**/*.less", ['less'])
 })
 
 gulp.task('livereload', function() {
     gulp.src(['src/style/**/*.less', 'src/**/*.html', 'src/script/**/*.js'])
         // .pipe(watch())
-        .pipe(watch('src/style/**/*.less'))
+        // .pipe(watch('src/style/**/*.less'))
+        .pipe(watch('dev-build/style/**/*.css'))
         .pipe(watch('src/script/**/*.js'))
         .pipe(connect.reload())
 })
 
 
 
-var defaultTask = ['less', 'watch', 'http-server']
+var devTask = ['less', 'watch', 'http-server']
 
-if (hasLivereload) {
-    defaultTask.push('livereload')
+if (isLivereload) {
+    devTask.push('livereload')
 }
 
-gulp.task('default', defaultTask)
+gulp.task('dev', devTask)
+
+
+var devTask = ['less-dist']
+
+gulp.task('dist', devTask)
