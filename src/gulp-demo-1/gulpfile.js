@@ -17,8 +17,8 @@ gulp.task('http-server', function() {
 ! function lessTask() {
     var LessPluginAutoPrefix = require('less-plugin-autoprefix'),
         autoprefix = new LessPluginAutoPrefix({ browsers: ["android > 2", 'iOS > 5'] }),
-
         plugins = [autoprefix]
+
     gulp.task('less', function() {
         gulp.src("src/style/**/*.less")
             .pipe(less({
