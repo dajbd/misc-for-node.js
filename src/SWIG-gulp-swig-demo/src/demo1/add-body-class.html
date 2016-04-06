@@ -20,6 +20,14 @@ class="module-p2p"
 <p>test</p>
 
 
+{% block contentInner %}
+{# 这里这样套一层，也是可以的 #}
+<!-- 上面是swig的注释语法，输出后的文件里 -->
+{# 这种注释在编译后，不会输出 #}
+<small>content inner </small>
+{% endblock %}
+
+
 <script>
 console.log('2016-4-6 22:31:44')
 </script>
