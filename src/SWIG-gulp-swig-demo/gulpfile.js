@@ -1,18 +1,32 @@
 var isDev = true,
-    // isLivereload = false,
-    isLivereload = true,
+    isLivereload = false,
+    // isLivereload = true,
     gulp = require('gulp'),
     connect = require('gulp-connect'),
     watch = require('gulp-watch'),
+    swig = require('gulp-swig'),
     less = require('gulp-less')
 
 gulp.task('http-server', function() {
     connect.server({
         livereload: isLivereload,
         // dev-build 为了让server 访问到css
-        root: ['src', 'dev-build']
+        // root: ['src', 'dev-build']  // 谁前谁后，要注意
+        root: ['dev-build', 'src']
     })
 })
+
+
+gulp.task('template', function() {
+    gulp.src('src/**/*.html')
+        .pipe(swig({
+            defaults: {
+                cache: false,
+            }
+        }))
+        .pipe(gulp.dest('./dev-build/'))
+})
+
 
 ! function lessTask() {
     var LessPluginAutoPrefix = require('less-plugin-autoprefix'),
@@ -44,6 +58,7 @@ gulp.task('http-server', function() {
 
 gulp.task('watch', function(cb) {
     gulp.watch("src/style/**/*.less", ['less'])
+    gulp.watch("src/**/*.html", ['template'])
 })
 
 gulp.task('livereload', function() {
@@ -57,7 +72,7 @@ gulp.task('livereload', function() {
 
 
 
-var devTask = ['less', 'watch', 'http-server']
+var devTask = ['less', 'template', 'watch', 'http-server']
 
 if (isLivereload) {
     devTask.push('livereload')
