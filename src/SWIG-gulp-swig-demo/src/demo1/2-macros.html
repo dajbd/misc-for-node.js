@@ -1,0 +1,22 @@
+<!-- macro 宏 -->
+{% macro title(text) %}
+<h1 class="title">{{ text }}</h1>
+{% endmacro %}
+
+
+{{ title("this is title") }}
+
+{{ title("this is title 2") }}
+
+
+<!-- 如果传对象进去呢？ -->
+{% macro person(person) %}
+<ul>
+	<li>姓名：{{ person.name }}</li>
+	<li>年龄：{{ person.age }}</li>
+	<li>身高：{{ person.height }}</li>
+</ul>
+{% endmacro %}
+
+{{ person({name: "张三", age: "25"}) }}
+<!-- 测试了，传对象也可以 -->
