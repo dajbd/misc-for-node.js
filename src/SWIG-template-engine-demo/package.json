@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "命令的配置参数cli: options": "--method-name | --wrap-start， 默认的编译后，是var tpl='', 如果要做js模块化，应该也是可以配置出来的。下面是一些编译的示例，使用npm run precompile 可以运行",
+    "p": "swig compile demos/1-basic.html --wrap-start=\"var my=\" > swig-dist/1-basic.js",
+    "precompile": "swig compile demos/1-basic.html > swig-dist/1-basic.js"
   },
   "author": "",
   "license": "ISC",
