@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <title>Demo</title>
+    <style type="text/css">
+
+    </style>
+</head>
+
+<body>
+    <div id="demo1">
+    </div>
+
+    <!--
+	2016-4-6 20:22:05
+	swig 不能这样直接在浏览器使用
+	官方建议，要node 编译后，再到浏览器端使用
+    下面的简单demo是不能达到预想的效果的。
+    -->
+
+	<script type="text/swig" id="tpl1">
+	<h1>{{ demoName|title }}</h1>
+    <!-- title 是个filter过滤器，会把一句话的单词首字母变成大写 -->
+	<br>
+	<p>
+	{{ text }}
+	</p>
+	<p>
+	<!-- 容错测试 -->
+	{{ test }}
+	{{ test.property.key }}
+	</p>
+	</script>
+
+	<script src="../node_modules/swig/dist/swig.js"></script>
+    <script>
+    new function() {
+    	var tpl = tpl1.innerHTML
+
+    	var data = {
+    		demoName: 'first demo',
+    		text: "some text some text"
+    	}
+
+    	// var res = swig.run(tpl, data)
+    	var res = swig.render(tpl, data)
+
+    	demo1.innerHTML = res
+    }
+    </script>
+</body>
+
+</html>

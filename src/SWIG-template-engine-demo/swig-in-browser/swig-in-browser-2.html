@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <title>Demo</title>
+    <style type="text/css">
+
+    </style>
+</head>
+
+<body>
+    <div id="demo1">
+    </div>
+
+	<script src="../node_modules/swig/dist/swig.js"></script>
+    <script src="../swig-dist/1-basic.js"></script>
+    <script>
+    new function() {
+        // tpl 变量，定义在 1-basic.js 文件中，swig默认编译后，变量名就是tpl
+        
+        console.log(tpl)
+        // console.log(tpl())
+        var res = swig.render(tpl, { })  // 报错： Uncaught TypeError: source.replace is not a function
+        demo1.innerHTML = res
+
+        // var output = swig.render(tpl, { filename: '/tpl', locals: { stuff: 'awesome' }});
+        // console.log(output)
+    }
+
+    </script>
+</body>
+
+</html>
