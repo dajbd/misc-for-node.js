@@ -55,6 +55,10 @@ gulp.task('livereload', function() {
         .pipe(connect.reload())
 })
 
+// png to jpg
+gulp.task('ptj', function() {
+    
+})
 
 
 var devTask = ['less', 'watch', 'http-server']
