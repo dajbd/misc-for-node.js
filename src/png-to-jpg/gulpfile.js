@@ -1,6 +1,6 @@
 var isDev = true,
-    // isLivereload = false,
-    isLivereload = true,
+    isLivereload = false,
+    // isLivereload = true,
     gulp = require('gulp'),
     connect = require('gulp-connect'),
     watch = require('gulp-watch'),
@@ -57,7 +57,15 @@ gulp.task('livereload', function() {
 
 // png to jpg
 gulp.task('ptj', function() {
-    
+    var gm = require('gulp-gm')
+    gulp.src('src/image/**.png')
+        .pipe(gm(function(gmfile) {
+
+            return gmfile.resize(100, 100)
+                // return gmfile.setFormat('jpg')
+
+        }))
+        .pipe(gulp.dest('dist'))
 })
 
 
