@@ -1,5 +1,8 @@
 {
-    "name": "hello-node-webkit",
-    "version": "0.1.0",
-    "main": "src/index.html"
+  "name": "hello-node-webkit",
+  "version": "0.1.0",
+  "main": "src/index.html",
+  "dependencies": {
+    "vue": "^1.0.24"
+  }
 }

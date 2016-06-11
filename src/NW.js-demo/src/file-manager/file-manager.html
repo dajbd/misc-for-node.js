@@ -1,20 +1,50 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
-<title>Demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <title>Demo</title>
+    <style>
+    .file-list {
+        overflow: hidden;
+    }
+    
+    .file {
+        float: left;
+        margin-bottom: 10px;
+    }
+    
+    ul {
+        list-style: none;
+    }
+    
+    .file-name {
+        display: block;
+        text-align: center;
+    }
+    
+    img {
+        max-width: 100%;
+    }
+    
+    .file-icon {
+        width: 120px;
+    }
+    </style>
 </head>
+
 <body>
-	<ul class="file-list">
-		<li >
-			<a href="####">
-				<img src="" alt="">
-				<span></span>
-			</a>
-		</li>
-	</ul>
-	
-	<script src="file-manager.js"></script>
+    <ul class="file-list">
+        <li v-for="file in files">
+            <a class="file" href="####">
+                <img class="file-icon" :src="'./image/' + file.type + '.png'" :alt="file.type">
+                <span class="file-name" v-text="file.name"></span>
+            </a>
+        </li>
+    </ul>
+    <script src="script/vue.js"></script>
+    <script src="file-manager.js"></script>
 </body>
+
 </html>
