@@ -22,4 +22,8 @@ var c = new Crawler({
 });
 
 // Queue a list of URLs
-c.queue(['http://baike.so.com/doc/2707954-2858984.html']);
+c.queue([
+    'http://baike.so.com/doc/2707954-2858984.html',
+    'https://zh.wikipedia.org/zh-hans/1963%E5%B9%B4',
+    'http://baike.so.com/doc/2844936-3002295.html',
+]);
